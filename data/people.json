@@ -1393,5 +1393,56 @@
     "photo": "",
     "sources": [],
     "last_verified": ""
+  },
+  {
+    "id": 123,
+    "name": "Новини Події Новини",
+    "status": "Потребує верифікації",
+    "role": "",
+    "summary": "Автоматично знайдено в офіційному матеріалі АП ВАКС. Це не встановлює вини. Профіль очікує редакторської перевірки.",
+    "cases": [
+      "Збільшити розмір тексту",
+      "Перейти до вмісту"
+    ],
+    "photo": "",
+    "sources": [
+      "https://ap.vaks.gov.ua/publications/page/2/",
+      "https://ap.vaks.gov.ua/publications/page/2/#content"
+    ],
+    "last_verified": "2026-09-02"
+  },
+  {
+    "id": 124,
+    "name": "Новини Події",
+    "status": "Потребує верифікації",
+    "role": "",
+    "summary": "Автоматично знайдено в офіційному матеріалі АП ВАКС. Це не встановлює вини. Профіль очікує редакторської перевірки.",
+    "cases": [
+      "Збільшити розмір тексту",
+      "Перейти до вмісту"
+    ],
+    "photo": "",
+    "sources": [
+      "https://ap.vaks.gov.ua/publications/page/2/",
+      "https://ap.vaks.gov.ua/publications/page/2/#content"
+    ],
+    "last_verified": "2026-09-02"
+  },
+  {
+    "id": 125,
+    "name": "Верховний Суд",
+    "status": "Потребує верифікації",
+    "role": "",
+    "summary": "Автоматично знайдено в офіційному матеріалі АП ВАКС. Це не встановлює вини. Профіль очікує редакторської перевірки.",
+    "cases": [
+      "Збільшити розмір тексту",
+      "Перейти до вмісту"
+    ],
+    "photo": "",
+    "sources": [
+      "https://ap.vaks.gov.ua/publications/page/3/",
+      "https://ap.vaks.gov.ua/publications/page/3/#content"
+    ],
+    "last_verified": "2026-09-02"
   }
 ]
