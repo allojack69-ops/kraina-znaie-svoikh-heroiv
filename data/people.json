@@ -1425,7 +1425,7 @@
   {
     "id": 127,
     "name": "Про Бюро Структура",
-    "status": "Потребує верифікації",
+    "status": "Підозра",
     "role": "",
     "summary": "Автоматично знайдено в офіційному матеріалі НАБУ. Це не встановлює вини. Профіль очікує редакторської перевірки.",
     "cases": [
@@ -1446,7 +1446,43 @@
       "https://nabu.gov.ua/news/mizhnarodna-koruptciyina-skhema-z-pasportamy-na-piv-mil-iarda-gryven-skerovano-do-sudu/",
       "https://nabu.gov.ua/news/koruptciia-v-prokuraturi-frankivshchyny-skerovano-do-sudu/",
       "https://nabu.gov.ua/news/nedeklaruvannia-pozyk-na-ponad-58-mln-grn-deputatom-oblrady-skerovano-do-sudu/",
-      "https://nabu.gov.ua/news/reyiderstvo-ta-vidmyvannia-koshtiv-vykryto-zlochynnu-organizatciiu-za-uchasti-topposadovtciv/"
+      "https://nabu.gov.ua/news/reyiderstvo-ta-vidmyvannia-koshtiv-vykryto-zlochynnu-organizatciiu-za-uchasti-topposadovtciv/",
+      {
+        "title": "Дорожня корупція на Полтавщині: нові підозри | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/dorozhnia-koruptciia-na-poltavshchyni-novi-pidozry/",
+        "source": "NABU",
+        "date": "2026-08-31"
+      },
+      {
+        "title": "Форми звернень | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/nayposhyrenishi-zapytannya/",
+        "source": "NABU",
+        "date": null
+      },
+      {
+        "title": "Рейдерство та відмивання коштів: нова підозра | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/reyiderstvo-ta-vidmyvannia-koshtiv-nova-pidozra/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "Корупція при закупівлі програмного забезпечення для Мінсоцполітики: матеріали відкрито | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/koruptciia-pry-zakupivli-programnogo-zabezpechennia-dlia-minsotcpolityky-materialy-vidkryto/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "Запобігання корупції | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/",
+        "source": "NABU",
+        "date": null
+      },
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
     ],
     "last_verified": "2026-09-02"
   },

@@ -1080,5 +1080,599 @@
       "Результати рейтингового інтернет-голосування за Раду громадського контролю при НАБУ десятого скликання"
     ],
     "needs_review": true
+  },
+  {
+    "name": "Контакти Контакти Інше",
+    "status": "Підозра",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Дорожня корупція на Полтавщині: нові підозри | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/dorozhnia-koruptciia-na-poltavshchyni-novi-pidozry/",
+        "source": "NABU",
+        "date": "2026-08-31"
+      },
+      {
+        "title": "Форми звернень | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/nayposhyrenishi-zapytannya/",
+        "source": "NABU",
+        "date": null
+      },
+      {
+        "title": "Рейдерство та відмивання коштів: нова підозра | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/reyiderstvo-ta-vidmyvannia-koshtiv-nova-pidozra/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "Корупція при закупівлі програмного забезпечення для Мінсоцполітики: матеріали відкрито | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/koruptciia-pry-zakupivli-programnogo-zabezpechennia-dlia-minsotcpolityky-materialy-vidkryto/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "Запобігання корупції | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/",
+        "source": "NABU",
+        "date": null
+      },
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Розшук Діяльність Звіти",
+    "status": "Підозра",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Дорожня корупція на Полтавщині: нові підозри | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/dorozhnia-koruptciia-na-poltavshchyni-novi-pidozry/",
+        "source": "NABU",
+        "date": "2026-08-31"
+      },
+      {
+        "title": "Форми звернень | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/nayposhyrenishi-zapytannya/",
+        "source": "NABU",
+        "date": null
+      },
+      {
+        "title": "Рейдерство та відмивання коштів: нова підозра | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/reyiderstvo-ta-vidmyvannia-koshtiv-nova-pidozra/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "Корупція при закупівлі програмного забезпечення для Мінсоцполітики: матеріали відкрито | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/koruptciia-pry-zakupivli-programnogo-zabezpechennia-dlia-minsotcpolityky-materialy-vidkryto/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "Запобігання корупції | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/",
+        "source": "NABU",
+        "date": null
+      },
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Офісу Президента України",
+    "status": "Підозра",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Рейдерство та відмивання коштів: нова підозра | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/reyiderstvo-ta-vidmyvannia-koshtiv-nova-pidozra/",
+        "source": "NABU",
+        "date": "2026-08-28"
+      },
+      {
+        "title": "НАБУ – Telegram",
+        "url": "https://t.me/s/nab_ukraine?q=%23%D0%BF%D1%96%D0%B4%D0%BE%D0%B7%D1%80%D0%B0",
+        "source": "NABU Telegram",
+        "date": "2026-06-02"
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Декларації Про Бюро",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Запобігання корупції | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Євген Анатолійович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Ілля Анатолійович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Ірина Вікторівна Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Анатолій Іванович Начальник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Андрій Володимирович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Андрій Миколайович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Борис Віталійович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Володимир Юрійович Директор",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Денис Олександрович Перший",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Людмила Михайлівна Начальник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Наталія Миколаївна Завідувач",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Оксана Яківна Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Олег Володимирович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Олександр Анатолійович Начальник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Олександр Юрійович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Олена Вікторівна Начальник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Павло Анатолійович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Роман Дмитрович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Роман Сергійович Заступник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Семен Юрійович Директор",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Тарас Васильович Директор",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Тарас Михайлович Начальник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Тетяна Володимирівна Заступник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Юрій Володимирович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Юрій Володимирович Начальник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Юрій Олексійович Директор",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Ярослав Миколайович Керівник",
+    "status": "Потребує верифікації",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "Декларації | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
+        "source": "NABU",
+        "date": null
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Збройних Сил України",
+    "status": "Вирок",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "НАБУ – Telegram",
+        "url": "https://t.me/s/nab_ukraine?q=%23%D0%BF%D1%96%D0%B4%D0%BE%D0%B7%D1%80%D0%B0",
+        "source": "NABU Telegram",
+        "date": "2026-06-02"
+      }
+    ],
+    "needs_review": true
+  },
+  {
+    "name": "Кабінету Міністрів України",
+    "status": "Вирок",
+    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+    "role": "",
+    "cases": [],
+    "sources": [
+      {
+        "title": "НАБУ – Telegram",
+        "url": "https://t.me/s/nab_ukraine?q=%23%D0%BF%D1%96%D0%B4%D0%BE%D0%B7%D1%80%D0%B0",
+        "source": "NABU Telegram",
+        "date": "2026-06-02"
+      }
+    ],
+    "needs_review": true
   }
 ]
