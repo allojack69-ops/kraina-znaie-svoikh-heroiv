@@ -1,50 +1,5 @@
 [
   {
-    "name": "Новини Події Новини",
-    "status": "Виправданий / справа завершена",
-    "source_type": "АП ВАКС",
-    "first_seen": "2026-09-02",
-    "sources": [
-      "https://ap.vaks.gov.ua/publications/page/2/",
-      "https://ap.vaks.gov.ua/publications/page/2/#content"
-    ],
-    "articles": [
-      "Збільшити розмір тексту",
-      "Перейти до вмісту"
-    ],
-    "needs_review": true
-  },
-  {
-    "name": "Новини Події",
-    "status": "Виправданий / справа завершена",
-    "source_type": "АП ВАКС",
-    "first_seen": "2026-09-02",
-    "sources": [
-      "https://ap.vaks.gov.ua/publications/page/2/",
-      "https://ap.vaks.gov.ua/publications/page/2/#content"
-    ],
-    "articles": [
-      "Збільшити розмір тексту",
-      "Перейти до вмісту"
-    ],
-    "needs_review": true
-  },
-  {
-    "name": "Верховний Суд",
-    "status": "Вирок",
-    "source_type": "АП ВАКС",
-    "first_seen": "2026-09-02",
-    "sources": [
-      "https://ap.vaks.gov.ua/publications/page/3/",
-      "https://ap.vaks.gov.ua/publications/page/3/#content"
-    ],
-    "articles": [
-      "Збільшити розмір тексту",
-      "Перейти до вмісту"
-    ],
-    "needs_review": true
-  },
-  {
     "name": "Категорія Новини Поділитись",
     "status": "Вирок",
     "source_type": "НАБУ",
