@@ -1425,7 +1425,7 @@
   {
     "id": 127,
     "name": "Про Бюро Структура",
-    "status": "Підозра",
+    "status": "Обвинувачення",
     "role": "",
     "summary": "Автоматично знайдено в офіційному матеріалі НАБУ. Це не встановлює вини. Профіль очікує редакторської перевірки.",
     "cases": [
@@ -1482,6 +1482,12 @@
         "url": "https://nabu.gov.ua/activity/zapobigannia-koruptcii/declarations/",
         "source": "NABU",
         "date": null
+      },
+      {
+        "title": "Незаконне збагачення та недостовірне декларування: судитимуть посадовця СБУ (ВІДЕО) | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/nezakonne-zbagachennia-ta-nedostovirne-deklaruvannia-sudytymut-posadovtcia-sbu/",
+        "source": "NABU",
+        "date": "2026-09-02"
       }
     ],
     "last_verified": "2026-09-02"
