@@ -25,17 +25,17 @@ footer{border-top:1px solid var(--line);padding:30px 20px;color:var(--muted);fon
 </style></head>
 <body>
 <header><div class="wrap">
-<div class="eyebrow">Публічний реєстр · MVP</div>
+<div class="eyebrow">Публічний реєстр · автоматичне оновлення</div>
 <h1>Країна повинна знати своїх героїв.</h1>
 <p class="lead">Публічна база документованих справ і рішень щодо публічних осіб. Ми відокремлюємо факт розслідування від підозри, обвинувачення та остаточного вироку.</p>
 <div class="notice"><b>Принцип:</b> сам факт згадки людини в базі не означає її вини. Для кожної картки статус має підтверджуватися першоджерелом; остаточна вина — лише за чинним судовим рішенням.</div>
 </div></header>
 <main class="wrap">
-<div class="stats"><div class="stat"><b id="count">0</b><span>унікальних імен</span></div><div class="stat"><b id="verified">0</b><span>профілів із джерелами</span></div><div class="stat"><b>Офіційні джерела</b><span>НАБУ · САП · ВАКС · НАЗК · ДБР · суди</span></div></div>
+<div class="stats"><div class="stat"><b id="count">0</b><span>унікальних імен</span></div><div class="stat"><b id="verified">0</b><span>профілів із джерелами</span></div><div class="stat"><b>Автооновлення</b><span>офіційні публікації → джерело → профіль</span></div></div>
 <div class="controls"><input id="search" placeholder="Пошук за ім'ям…"><select id="status"><option value="">Усі статуси</option><option>Потребує верифікації</option><option>Підозра</option><option>Обвинувачення</option><option>Вирок</option><option>Виправданий / справа завершена</option></select></div>
 <div id="grid" class="grid"></div>
 </main>
-<footer><div class="wrap">MVP підготовлено як документальну базу. Перед публікацією кожен запис потрібно перевірити за першоджерелами й оновлювати статус справи. Не використовувати сайт як твердження про винуватість без чинного вироку.</div></footer>
+<footer><div class="wrap">База автоматично збирає нові матеріали з офіційних джерел. Автоматично знайдені люди отримують статус «Потребує верифікації» до редакторської перевірки. Не використовувати сайт як твердження про винуватість без чинного вироку.</div></footer>
 <div id="modal" class="modal"><div class="dialog"><div class="dialogHead"><div><div class="eyebrow">Досьє</div><h2 id="mname"></h2></div><button id="close">×</button></div><div class="dialogBody"><div id="mstatus"></div><div class="section"><h3>Посада / роль</h3><div id="mrole" class="empty"></div></div><div class="section"><h3>Що встановлено документами</h3><div id="msummary" class="empty"></div></div><div class="section"><h3>Провадження / рішення</h3><div id="mcases" class="empty"></div></div><div class="section sources"><h3>Першоджерела</h3><div id="msources" class="empty"></div></div></div></div></div>
 <script>
 let people=[];
