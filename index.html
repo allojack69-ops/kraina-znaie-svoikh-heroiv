@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Країна повинна знати своїх героїв</title>
+<meta name="description" content="Публічна база досьє: імена, посади, провадження, рішення судів та першоджерела.">
+<style>
+:root{--bg:#0b0d10;--card:#12161b;--muted:#9aa4af;--text:#f2f5f7;--line:#27303a;--accent:#ffd400;--danger:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:48px 20px 28px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#11151a,#0b0d10)}
+.wrap{max-width:1180px;margin:auto}.eyebrow{color:var(--accent);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(32px,6vw,64px);line-height:.98;margin:12px 0 16px;max-width:900px}
+.lead{color:#c7cdd3;max-width:820px;line-height:1.55}
+.notice{margin-top:22px;padding:14px 16px;border:1px solid #5c4d00;background:#191600;border-radius:12px;color:#e8dfb0}
+.controls{display:grid;grid-template-columns:1fr 220px;gap:12px;margin:24px 0}
+input,select{width:100%;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:10px;color:var(--text);font-size:16px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px}.stat b{display:block;font-size:22px}.stat span{color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;padding-bottom:50px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.15s}.card:hover{transform:translateY(-2px);border-color:#4b5662}
+.photo{height:220px;background:#1b222a;display:grid;place-items:center;font-size:64px;font-weight:800;color:#64707c}
+.body{padding:16px}.name{font-size:20px;font-weight:800}.status{display:inline-block;margin-top:9px;font-size:11px;border:1px solid #6a5b00;color:#e9d56a;padding:5px 8px;border-radius:999px}.role{color:var(--muted);margin-top:9px;font-size:13px}
+footer{border-top:1px solid var(--line);padding:30px 20px;color:var(--muted);font-size:13px;line-height:1.6}
+.modal{position:fixed;inset:0;background:#000b;display:none;padding:20px;overflow:auto}.modal.open{display:block}.dialog{max-width:850px;margin:40px auto;background:#11161b;border:1px solid var(--line);border-radius:16px;overflow:hidden}.dialogHead{display:flex;justify-content:space-between;gap:20px;padding:20px;border-bottom:1px solid var(--line)}button{background:none;border:0;color:white;font-size:28px;cursor:pointer}.dialogBody{padding:20px}.section{margin-top:22px}.section h3{margin-bottom:8px}.empty{color:var(--muted);padding:12px;border:1px dashed var(--line);border-radius:10px}.sources a{color:#e6cf35}
+@media(max-width:650px){.controls{grid-template-columns:1fr}.photo{height:180px}}
+</style></head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">Публічний реєстр · MVP</div>
+<h1>Країна повинна знати своїх героїв.</h1>
+<p class="lead">Публічна база документованих справ і рішень щодо публічних осіб. Ми відокремлюємо факт розслідування від підозри, обвинувачення та остаточного вироку.</p>
+<div class="notice"><b>Принцип:</b> сам факт згадки людини в базі не означає її вини. Для кожної картки статус має підтверджуватися першоджерелом; остаточна вина — лише за чинним судовим рішенням.</div>
+</div></header>
+<main class="wrap">
+<div class="stats"><div class="stat"><b id="count">0</b><span>унікальних імен</span></div><div class="stat"><b id="verified">0</b><span>профілів із джерелами</span></div><div class="stat"><b>Офіційні джерела</b><span>НАБУ · САП · ВАКС · НАЗК · ДБР · суди</span></div></div>
+<div class="controls"><input id="search" placeholder="Пошук за ім'ям…"><select id="status"><option value="">Усі статуси</option><option>Потребує верифікації</option><option>Підозра</option><option>Обвинувачення</option><option>Вирок</option><option>Виправданий / справа завершена</option></select></div>
+<div id="grid" class="grid"></div>
+</main>
+<footer><div class="wrap">MVP підготовлено як документальну базу. Перед публікацією кожен запис потрібно перевірити за першоджерелами й оновлювати статус справи. Не використовувати сайт як твердження про винуватість без чинного вироку.</div></footer>
+<div id="modal" class="modal"><div class="dialog"><div class="dialogHead"><div><div class="eyebrow">Досьє</div><h2 id="mname"></h2></div><button id="close">×</button></div><div class="dialogBody"><div id="mstatus"></div><div class="section"><h3>Посада / роль</h3><div id="mrole" class="empty"></div></div><div class="section"><h3>Що встановлено документами</h3><div id="msummary" class="empty"></div></div><div class="section"><h3>Провадження / рішення</h3><div id="mcases" class="empty"></div></div><div class="section sources"><h3>Першоджерела</h3><div id="msources" class="empty"></div></div></div></div></div>
+<script>
+let people=[];
+const grid=document.querySelector('#grid'), search=document.querySelector('#search'), status=document.querySelector('#status');
+const initials=n=>n.split(' ').map(x=>x[0]).slice(0,2).join('');
+function render(){let q=search.value.toLowerCase().trim(), s=status.value; let a=people.filter(p=>(!q||p.name.toLowerCase().includes(q))&&(!s||p.status===s));
+document.querySelector('#count').textContent=people.length;
+document.querySelector('#verified').textContent=people.filter(p=>p.sources&&p.sources.length).length; grid.innerHTML=a.map(p=>`<article class="card" onclick="openPerson(${p.id})"><div class="photo">${p.photo?`<img src="${p.photo}" alt="" style="width:100%;height:100%;object-fit:cover">`:initials(p.name)}</div><div class="body"><div class="name">${p.name}</div><span class="status">${p.status}</span><div class="role">${p.role||'Очікує документальної перевірки'}</div></div></article>`).join('')||'<div class="empty">Нічого не знайдено.</div>'}
+function openPerson(id){let p=people.find(x=>x.id===id);document.querySelector('#mname').textContent=p.name;document.querySelector('#mstatus').innerHTML=`<span class="status">${p.status}</span>`;document.querySelector('#mrole').textContent=p.role||'Не заповнено';document.querySelector('#msummary').textContent=p.summary||'Запис ще не пройшов документальну верифікацію.';document.querySelector('#mcases').innerHTML=p.cases.length?p.cases.map(x=>`<div>${x}</div>`).join(''):'Не заповнено';document.querySelector('#msources').innerHTML=p.sources.length?p.sources.map(x=>`<div><a href="${x}" target="_blank" rel="noopener">${x}</a></div>`).join(''):'Не заповнено';document.querySelector('#modal').classList.add('open')}
+document.querySelector('#close').onclick=()=>document.querySelector('#modal').classList.remove('open');document.querySelector('#modal').onclick=e=>{if(e.target.id==='modal')e.target.classList.remove('open')};search.oninput=render;status.onchange=render;
+fetch('data/people.json').then(r=>r.json()).then(x=>{people=x;render()});
+</script></body></html>
