@@ -1,284 +1,434 @@
-#!/usr/bin/env python3
-"""Automatic source collector for 'Країна повинна знати своїх героїв'."""
-from __future__ import annotations
-import json, re, time
-from datetime import datetime, timezone
+# COLLECTOR V2
+# Автоматичний збір офіційних матеріалів про справи з 01.01.2022
+
+import json
+import re
+import time
 from pathlib import Path
-from urllib.parse import urljoin, urlparse
+from datetime import datetime
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / 'data' / 'people.json'
-INBOX = ROOT / 'data' / 'inbox.json'
-STATE = ROOT / 'data' / 'collector_state.json'
+DATA = ROOT / "data"
+PEOPLE_FILE = DATA / "people.json"
+INBOX_FILE = DATA / "inbox.json"
+STATE_FILE = DATA / "collector_state.json"
 
-UA = ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
-      '(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 '
-      'KrainaHeroivCollector/1.2')
-session = requests.Session()
-session.headers.update({
-    'User-Agent': UA,
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'uk-UA,uk;q=0.9,en;q=0.7'
-})
+SINCE = datetime(2022, 1, 1)
 
-TRIGGERS = re.compile(
-    r'(підозр|підозрю|обвинув|судитим|засуд|вирок|виправд|затриман|'
-    r'неправомірн|незаконн|розкрад|збагачен|недекларув)', re.I
-)
-NAME2 = re.compile(r"\b([А-ЯІЇЄҐ][а-яіїєґ’'\-]{2,30}\s+[А-ЯІЇЄҐ][а-яіїєґ’'\-]{2,30})\b")
-NAME3 = re.compile(r"\b([А-ЯІЇЄҐ][а-яіїєґ’'\-]{2,30}\s+[А-ЯІЇЄҐ][а-яіїєґ’'\-]{2,30}\s+[А-ЯІЇЄҐ][а-яіїєґ’'\-]{2,30})\b")
+UA = "Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/140 Mobile Safari/537.36"
+
+SOURCES = {
+    "nabu": "https://nabu.gov.ua",
+    "dbr": "https://dbr.gov.ua",
+    "sapo": "https://t.me/s/sap_gov_ua",
+    "nabu_tg": "https://t.me/s/nab_ukraine",
+}
+
+TRIGGERS = [
+    "підозр", "обвинувачен", "обвинувальн",
+    "вирок", "засуджен", "виправдан",
+    "затриман", "арешт", "застава",
+    "корупц", "хабар", "неправомірн",
+    "незаконн", "розтра", "привласнен",
+    "зловживан", "службов", "деклар",
+    "незаконне збагачення", "відмиван",
+    "легалізаці", "конфіскац",
+    "збитк", "заволодін",
+]
 
 BAD_NAMES = {
-    'новини події', 'новини події новини', 'верховний суд',
-    'збільшити розмір тексту', 'перейти до вмісту'
+    "новини події",
+    "новини події новини",
+    "верховний суд",
+    "збільшити розмір тексту",
+    "перейти до вмісту",
+    "читати далі",
+    "детальніше",
+    "головна сторінка",
 }
-BAD_ARTICLE_TITLES = {'збільшити розмір тексту', 'перейти до вмісту'}
 
-def get(url: str) -> str:
-    last = None
-    for delay in (0, 2, 5):
-        if delay:
-            time.sleep(delay)
-        try:
-            r = session.get(url, timeout=30)
-            r.raise_for_status()
-            return r.text
-        except Exception as e:
-            last = e
-    raise last
+NAME_RE = re.compile(
+    r"\b([А-ЯІЇЄҐ][а-яіїєґ'ʼ-]{2,})\s+"
+    r"([А-ЯІЇЄҐ]\.[А-ЯІЇЄҐ]\.)\b"
+)
 
-def clean(s: str) -> str:
-    return re.sub(r'\s+', ' ', s or '').strip()
+NAME3_RE = re.compile(
+    r"\b([А-ЯІЇЄҐ][а-яіїєґ'ʼ-]{2,})\s+"
+    r"([А-ЯІЇЄҐ][а-яіїєґ'ʼ-]{2,})\s+"
+    r"([А-ЯІЇЄҐ][а-яіїєґ'ʼ-]{2,})\b"
+)
 
-def norm(s: str) -> str:
-    return re.sub(r'[^а-яіїєґa-z0-9]', '', s.lower())
+session = requests.Session()
+session.headers.update({"User-Agent": UA})
 
-def status_for(text: str) -> str:
-    t = text.lower()
-    if 'виправд' in t:
-        return 'Виправданий / справа завершена'
-    if 'вирок' in t or 'засуджен' in t:
-        return 'Вирок'
-    if 'обвинув' in t or 'судитим' in t or 'до суду' in t:
-        return 'Обвинувачення'
-    if 'підозр' in t or 'затриман' in t:
-        return 'Підозра'
-    return 'Потребує верифікації'
 
-def article_links(html: str, base: str, host_hint: str) -> list[tuple[str, str]]:
-    soup = BeautifulSoup(html, 'html.parser')
-    out, seen = [], set()
-    base_path = urlparse(base).path.rstrip('/')
-    for a in soup.find_all('a', href=True):
-        href = urljoin(base, a['href']).split('#', 1)[0]
-        title = clean(a.get_text(' ', strip=True))
-        host = urlparse(href).netloc
-        path = urlparse(href).path.rstrip('/')
-        if host_hint not in host or not title or len(title) < 12:
-            continue
-        if title.lower() in BAD_ARTICLE_TITLES:
-            continue
-        # Never treat listing/pagination/navigation pages as individual cases.
-        if path == base_path or '/page/' in path or path.endswith('/publications'):
-            continue
-        good = (
-            ('/news/' in path and 'nabu.gov.ua' in host) or
-            ('/publications/' in path and 'vaks.gov.ua' in host) or
-            ('/news/' in path and 'vaks.gov.ua' in host)
-        )
-        if not good or href.rstrip('/') in seen:
-            continue
-        seen.add(href.rstrip('/'))
-        out.append((title, href))
-    return out
-
-def telegram_links(html: str):
-    soup = BeautifulSoup(html, 'html.parser')
-    out, seen = [], set()
-    for msg in soup.select('.tgme_widget_message'):
-        text = clean(msg.get_text(' ', strip=True))
-        if not text or not TRIGGERS.search(text):
-            continue
-        a = msg.select_one('.tgme_widget_message_date')
-        if not a or not a.get('href'):
-            continue
-        post_url = a['href']
-        if post_url in seen:
-            continue
-        seen.add(post_url)
-        source_url = post_url
-        for link in msg.find_all('a', href=True):
-            href = urljoin(post_url, link['href'])
-            if 'nabu.gov.ua' in urlparse(href).netloc:
-                source_url = href
-                break
-        title = clean(text.split('—', 1)[0]) if len(text) < 180 else text[:180]
-        out.append((title, source_url, post_url, text))
-    return out[:80]
-
-def discover():
-    items = []
-    for page in range(1, 13):
-        url = 'https://nabu.gov.ua/news/' if page == 1 else f'https://nabu.gov.ua/news/page{page}/'
-        try:
-            items += [('НАБУ', *x) for x in article_links(get(url), url, 'nabu.gov.ua')]
-        except Exception as e:
-            print('WARN NABU WEBSITE', url, e)
-
+def load_json(path, default):
     try:
-        tg = 'https://t.me/s/nab_ukraine'
-        for title, source_url, post_url, text in telegram_links(get(tg)):
-            items.append(('НАБУ Telegram', title, source_url, post_url, text))
-        print('NABU TELEGRAM FALLBACK OK')
-    except Exception as e:
-        print('WARN NABU TELEGRAM', e)
+        if path.exists():
+            return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+    return default
 
-    for base in ['https://first.vaks.gov.ua/', 'https://ap.vaks.gov.ua/publications/']:
-        for page in range(1, 4):
-            url = base if page == 1 else base + ('page/' if base.endswith('/publications/') else '') + str(page) + '/'
+
+def save_json(path, obj):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(obj, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
+
+
+people = load_json(PEOPLE_FILE, [])
+inbox = load_json(INBOX_FILE, [])
+state = load_json(STATE_FILE, {})
+
+if isinstance(people, dict):
+    people = people.get("people", [])
+
+if isinstance(inbox, dict):
+    inbox = inbox.get("people", [])
+
+
+def get(url):
+    for attempt in range(3):
+        try:
+            r = session.get(url, timeout=25)
+            if r.status_code == 200:
+                return r.text
+        except Exception:
+            pass
+        time.sleep(1 + attempt)
+    return ""
+
+
+def clean(text):
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
+def article_date(soup, text):
+    candidates = []
+
+    for tag in soup.find_all("time"):
+        if tag.get("datetime"):
+            candidates.append(tag["datetime"])
+        candidates.append(tag.get_text(" ", strip=True))
+
+    for meta in soup.find_all("meta"):
+        key = (meta.get("property") or meta.get("name") or "").lower()
+        if "date" in key or "published" in key:
+            if meta.get("content"):
+                candidates.append(meta["content"])
+
+    candidates += re.findall(
+        r"\b(?:0?[1-9]|[12]\d|3[01])[./-](?:0?[1-9]|1[0-2])[./-](202\d)\b",
+        text
+    )
+
+    for value in candidates:
+        m = re.search(r"(202[2-9])[-./](\d{1,2})[-./](\d{1,2})", value)
+        if m:
             try:
-                items += [('ВАКС' if 'first.' in base else 'АП ВАКС', *x)
-                          for x in article_links(get(url), url, 'vaks.gov.ua')]
-            except Exception as e:
-                print('WARN VAKS', url, e)
+                return datetime(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+            except Exception:
+                pass
 
-    ded = {}
-    for item in items:
-        ded[item[2]] = item
-    return list(ded.values())
+        m = re.search(r"(\d{1,2})[./-](\d{1,2})[./-](202[2-9])", value)
+        if m:
+            try:
+                return datetime(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+            except Exception:
+                pass
 
-def extract_names(text: str, title: str, existing: list[dict]) -> list[str]:
-    found = []
-    bad_norm = {norm(x) for x in BAD_NAMES}
+    return None
 
-    for p in existing:
-        if norm(p['name']) in norm(text) and p['name'] not in found:
-            found.append(p['name'])
 
-    for m in list(NAME3.finditer(text)) + list(NAME2.finditer(text)):
-        name = clean(m.group(1))
-        if norm(name) in bad_norm:
+def relevant(text):
+    low = text.lower()
+    return any(x in low for x in TRIGGERS)
+
+
+def extract_names(text):
+    found = set()
+
+    for m in NAME_RE.finditer(text):
+        name = clean(" ".join(m.groups()))
+        if name.lower() not in BAD_NAMES:
+            found.add(name)
+
+    for m in NAME3_RE.finditer(text):
+        name = clean(" ".join(m.groups()))
+        low = name.lower()
+
+        if low in BAD_NAMES:
             continue
-        if any(w in name.lower() for w in [
-            'національного', 'генерального', 'антикорупційного', 'верховного',
-            'україни', 'офісу', 'обласної', 'міської', 'районного',
-            'державного', 'міністерства'
+
+        # Не беремо очевидні заголовки/навігацію
+        if any(x in low for x in [
+            "новини", "розмір тексту", "перейти",
+            "верховний суд", "детальніше"
         ]):
             continue
-        left = text[max(0, m.start()-140):m.start()]
-        right = text[m.end():m.end()+140]
-        if TRIGGERS.search(left + ' ' + right) and name not in found:
-            found.append(name)
 
-    return found[:10]
+        found.add(name)
 
-def article_text(html: str) -> str:
-    soup = BeautifulSoup(html, 'html.parser')
-    for x in soup(['script', 'style', 'noscript', 'svg']):
-        x.decompose()
-    main = soup.find('main') or soup.body or soup
-    return clean(main.get_text(' ', strip=True))
+    return sorted(found)
 
-def main():
-    people = json.loads(DATA.read_text(encoding='utf-8'))
-    inbox = json.loads(INBOX.read_text(encoding='utf-8')) if INBOX.exists() else []
 
-    # Remove the three navigation false positives created by collector v1.1.
-    bad_norm = {norm(x) for x in BAD_NAMES}
-    people = [p for p in people if norm(p.get('name', '')) not in bad_norm]
-    inbox = [x for x in inbox if norm(x.get('name', '')) not in bad_norm]
+def source_record(url, title, date, source, text):
+    return {
+        "url": url,
+        "title": title[:500],
+        "date": date.strftime("%Y-%m-%d") if date else None,
+        "source": source,
+        "snippet": clean(text)[:1200],
+    }
 
-    state = json.loads(STATE.read_text(encoding='utf-8')) if STATE.exists() else {'seen_urls': []}
-    seen = set(state.get('seen_urls', []))
-    now = datetime.now(timezone.utc).date().isoformat()
 
-    links = discover()
-    print('DISCOVERED', len(links))
-    changed = 0
+articles = []
+seen_urls = set()
 
-    for item in links:
-        src, title, url = item[:3]
-        telegram_text = item[4] if len(item) > 4 else ''
+# Зберігаємо вже відомі URL
+for p in people + inbox:
+    for s in p.get("sources", []):
+        if isinstance(s, dict) and s.get("url"):
+            seen_urls.add(s["url"])
 
-        if url in seen:
-            continue
 
-        try:
-            text = telegram_text if src == 'НАБУ Telegram' else article_text(get(url))
-        except Exception as e:
-            print('WARN ARTICLE', url, e)
-            seen.add(url)
-            continue
+def process_page(url, source):
+    if url in seen_urls:
+        return 0
 
-        if not TRIGGERS.search(title + ' ' + text):
-            seen.add(url)
-            continue
+    html = get(url)
+    if not html:
+        return 0
 
-        names = extract_names(text, title, people)
-        status = status_for(title + ' ' + text)
+    soup = BeautifulSoup(html, "html.parser")
+    text = clean(soup.get_text(" ", strip=True))
 
-        for name in names:
-            existing = next((p for p in people if norm(p['name']) == norm(name)), None)
+    date = article_date(soup, text)
 
-            if existing:
-                if url not in existing.get('sources', []):
-                    existing.setdefault('sources', []).append(url)
-                    changed += 1
+    # Старі матеріали не беремо
+    if date and date < SINCE:
+        return 0
 
-                rank = {
-                    'Потребує верифікації': 0,
-                    'Підозра': 1,
-                    'Обвинувачення': 2,
-                    'Вирок': 3,
-                    'Виправданий / справа завершена': 3
-                }
-                if rank.get(status, 0) > rank.get(existing.get('status', 'Потребує верифікації'), 0):
-                    existing['status'] = status
-                    changed += 1
+    if not relevant(text):
+        return 0
 
-                if not existing.get('summary'):
-                    existing['summary'] = (
-                        f'Автоматично знайдено в офіційному матеріалі {src}: {title}. '
-                        'Перевірка деталей потребує редактора.'
-                    )
-                if title not in existing.get('cases', []):
-                    existing.setdefault('cases', []).append(f'{title} — {now}.')
-                existing['last_verified'] = now
-
-            else:
-                cand = next((x for x in inbox if norm(x.get('name', '')) == norm(name)), None)
-                if not cand:
-                    inbox.append({
-                        'name': name,
-                        'status': status,
-                        'source_type': src,
-                        'first_seen': now,
-                        'sources': [url],
-                        'articles': [title],
-                        'needs_review': True
-                    })
-                    changed += 1
-                else:
-                    if url not in cand.get('sources', []):
-                        cand['sources'].append(url)
-                        cand.setdefault('articles', []).append(title)
-                        changed += 1
-
-        seen.add(url)
-        time.sleep(0.15)
-
-    # IMPORTANT: new people are NEVER published automatically.
-    # They stay in inbox until editorial verification.
-    DATA.write_text(json.dumps(people, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    INBOX.write_text(json.dumps(inbox, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    STATE.write_text(
-        json.dumps({'seen_urls': sorted(seen)[-5000:], 'last_run': now},
-                   ensure_ascii=False, indent=2) + '\n',
-        encoding='utf-8'
+    title = clean(
+        soup.title.get_text(" ", strip=True)
+        if soup.title else ""
     )
-    print('PEOPLE', len(people), 'INBOX', len(inbox), 'CHANGED', changed)
 
-if __name__ == '__main__':
-    main()
+    names = extract_names(text)
+
+    if not names:
+        return 0
+
+    rec = source_record(url, title, date, source, text)
+    rec["names"] = names
+    articles.append(rec)
+    seen_urls.add(url)
+
+    return len(names)
+
+
+def archive_links(base_url, pages, source):
+    total = 0
+
+    for page in range(1, pages + 1):
+        if page == 1:
+            url = base_url
+        else:
+            url = f"{base_url}?page={page}"
+
+        html = get(url)
+        if not html:
+            continue
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        links = set()
+        for a in soup.find_all("a", href=True):
+            href = urljoin(url, a["href"])
+            text = clean(a.get_text(" ", strip=True))
+
+            if not href.startswith("http"):
+                continue
+
+            low = text.lower()
+
+            if any(x in low for x in [
+                "підоз", "обвин", "вирок", "затрим",
+                "коруп", "хабар", "розтра", "зловжив",
+                "незакон", "деклар"
+            ]):
+                links.add(href)
+
+        for link in links:
+            total += process_page(link, source)
+
+        print(f"{source}: page {page}/{pages}, names={total}")
+
+    return total
+
+
+print("=== KRainaHeroiv Collector V2 ===")
+print("Historical backfill since:", SINCE.date())
+
+total = 0
+
+# NABU — основний архів
+total += archive_links(
+    "https://nabu.gov.ua/news/",
+    12,
+    "NABU"
+)
+
+# NABU Telegram fallback
+total += archive_links(
+    SOURCES["nabu_tg"],
+    80,
+    "NABU Telegram"
+)
+
+# SAPO official Telegram
+total += archive_links(
+    SOURCES["sapo"],
+    80,
+    "SAPO Telegram"
+)
+
+# DBR — великий архів
+total += archive_links(
+    "https://dbr.gov.ua/news",
+    180,
+    "DBR"
+)
+
+print("DISCOVERED NAMES:", total)
+
+
+def status_from_text(text):
+    low = text.lower()
+
+    if "виправдан" in low:
+        return "Виправданий / справа завершена"
+
+    if "вирок" in low or "засуджен" in low:
+        return "Вирок"
+
+    if "обвинувальн" in low or "обвинувачен" in low:
+        return "Обвинувачення"
+
+    if "підозр" in low:
+        return "Підозра"
+
+    return "Потребує верифікації"
+
+
+# Індекс уже наявних людей
+index = {
+    clean(p.get("name", "")).lower(): p
+    for p in people
+    if p.get("name")
+}
+
+inbox_index = {
+    clean(p.get("name", "")).lower(): p
+    for p in inbox
+    if p.get("name")
+}
+
+
+for article in articles:
+    status = status_from_text(article["snippet"])
+
+    for name in article["names"]:
+        key = name.lower()
+
+        if key in index:
+            p = index[key]
+
+            sources = p.setdefault("sources", [])
+
+            if not any(
+                isinstance(s, dict) and s.get("url") == article["url"]
+                for s in sources
+            ):
+                sources.append({
+                    "title": article["title"],
+                    "url": article["url"],
+                    "source": article["source"],
+                    "date": article["date"],
+                })
+
+            # Не знижуємо вже сильніший статус
+            rank = {
+                "Потребує верифікації": 0,
+                "Підозра": 1,
+                "Обвинувачення": 2,
+                "Вирок": 3,
+                "Виправданий / справа завершена": 3,
+            }
+
+            old = p.get("status", "Потребує верифікації")
+
+            if rank.get(status, 0) > rank.get(old, 0):
+                p["status"] = status
+
+        else:
+            if key not in inbox_index:
+                item = {
+                    "name": name,
+                    "status": status,
+                    "summary": "Автоматично виявлено в офіційному матеріалі. Потребує редакційної перевірки.",
+                    "role": "",
+                    "cases": [],
+                    "sources": [{
+                        "title": article["title"],
+                        "url": article["url"],
+                        "source": article["source"],
+                        "date": article["date"],
+                    }],
+                    "needs_review": True,
+                }
+
+                inbox.append(item)
+                inbox_index[key] = item
+            else:
+                item = inbox_index[key]
+                sources = item.setdefault("sources", [])
+
+                if not any(
+                    isinstance(s, dict) and s.get("url") == article["url"]
+                    for s in sources
+                ):
+                    sources.append({
+                        "title": article["title"],
+                        "url": article["url"],
+                        "source": article["source"],
+                        "date": article["date"],
+                    })
+
+
+save_json(PEOPLE_FILE, people)
+save_json(INBOX_FILE, inbox)
+
+state["last_run"] = datetime.utcnow().isoformat() + "Z"
+state["since"] = "2022-01-01"
+state["version"] = "2.0"
+state["people"] = len(people)
+state["inbox"] = len(inbox)
+state["articles_added"] = len(articles)
+
+save_json(STATE_FILE, state)
+
+print("PEOPLE:", len(people))
+print("INBOX:", len(inbox))
+print("ARTICLES:", len(articles))
+print("DONE")
