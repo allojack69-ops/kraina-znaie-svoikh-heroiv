@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Публічні особи — Kраїна знає своїх героїв</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: #f0f6fc;
+    }
+
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      border-bottom: 1px solid #30363d;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 30px;
+    }
+
+    .subtitle {
+      color: #8b949e;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 25px 15px;
+    }
+
+    .notice {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      background: #0d1117;
+      color: #f0f6fc;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 18px;
+      cursor: pointer;
+      background: #238636;
+      color: white;
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .category {
+      display: inline-block;
+      color: #8b949e;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .score {
+      font-size: 26px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .actions button {
+      background: #21262d;
+      border: 1px solid #30363d;
+    }
+
+    .actions button:hover {
+      background: #30363d;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #8b949e;
+    }
+
+    dialog {
+      width: min(600px, 92%);
+      background: #161b22;
+      color: #f0f6fc;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 25px;
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .secondary {
+      background: #21262d;
+      border: 1px solid #30363d;
+    }
+
+    .warning {
+      color: #d29922;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Публічні особи</h1>
+  <div class="subtitle">
+    Відкритий каталог публічних висловлювань та оцінок.
+    Додавайте людей, факти, джерела та власні аргументи.
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="notice">
+    <strong>Важливо:</strong>
+    цей проєкт не є списком «винних».
+    Тут оцінюються публічні висловлювання та дії,
+    а твердження мають супроводжуватися перевірюваними джерелами.
+  </div>
+
+  <div class="controls">
+    <input
+      id="search"
+      type="search"
+      placeholder="Пошук за іменем..."
+    >
+
+    <select id="category">
+      <option value="">Усі категорії</option>
+      <option value="журналіст">Журналісти</option>
+      <option value="блогер">Блогери</option>
+      <option value="політик">Політики</option>
+      <option value="медіа">Медіа</option>
+      <option value="інше">Інше</option>
+    </select>
+
+    <button onclick="openForm()">+ Додати особу</button>
+  </div>
+
+  <div id="cards" class="cards"></div>
+
+</div>
+
+<dialog id="personDialog">
+
+  <h2>Додати публічну особу</h2>
+
+  <form id="personForm">
+
+    <input
+      id="name"
+      required
+      placeholder="Ім'я та прізвище"
+    >
+
+    <select id="personCategory" required>
+      <option value="журналіст">Журналіст</option>
+      <option value="блогер">Блогер</option>
+      <option value="політик">Політик</option>
+      <option value="медіа">Медіа</option>
+      <option value="інше">Інше</option>
+    </select>
+
+    <textarea
+      id="description"
+      rows="5"
+      required
+      placeholder="Що саме стверджується? Додайте конкретний опис..."
+    ></textarea>
+
+    <input
+      id="source"
+      type="url"
+      required
+      placeholder="Посилання на джерело"
+    >
+
+    <div class="warning">
+      Не публікуйте неперевірені звинувачення.
+      Відокремлюйте факти від власних оцінок.
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit">Додати</button>
+      <button
+        type="button"
+        class="secondary"
+        onclick="closeForm()"
+      >
+        Скасувати
+      </button>
+    </div>
+
+  </form>
+
+</dialog>
+
+<script>
+
+const people = [
+  {
+    name: "Додайте першу особу",
+    category: "інше",
+    description:
+      "Це демонстраційний запис. Натисніть «Додати особу», щоб створити власний запис.",
+    source: "#",
+    votes: 0
+  }
+];
+
+const cards = document.getElementById("cards");
+const search = document.getElementById("search");
+const category = document.getElementById("category");
+
+function render() {
+
+  const query = search.value.toLowerCase().trim();
+  const selectedCategory = category.value;
+
+  const filtered = people.filter(person => {
+
+    const matchesName =
+      person.name.toLowerCase().includes(query);
+
+    const matchesCategory =
+      !selectedCategory ||
+      person.category === selectedCategory;
+
+    return matchesName && matchesCategory;
+  });
+
+  cards.innerHTML = "";
+
+  if (!filtered.length) {
+    cards.innerHTML =
+      '<div class="empty">Нічого не знайдено.</div>';
+    return;
+  }
+
+  filtered.forEach((person, index) => {
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <h2>${escapeHtml(person.name)}</h2>
+
+      <span class="category">
+        ${escapeHtml(person.category)}
+      </span>
+
+      <p>
+        ${escapeHtml(person.description)}
+      </p>
+
+      <div class="score">
+        👍 ${person.votes}
+      </div>
+
+      <a
+        href="${escapeAttribute(person.source)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Джерело
+      </a>
+
+      <div class="actions">
+        <button onclick="vote(${index})">
+          👍 Підтвердити
+        </button>
+
+        <button onclick="disagree(${index})">
+          👎 Не погоджуюсь
+        </button>
+      </div>
+    `;
+
+    cards.appendChild(card);
+  });
+}
+
+function vote(index) {
+  people[index].votes++;
+  render();
+}
+
+function disagree(index) {
+  people[index].votes--;
+  render();
+}
+
+function openForm() {
+  document.getElementById("personDialog").showModal();
+}
+
+function closeForm() {
+  document.getElementById("personDialog").close();
+}
+
+document.getElementById("personForm")
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    people.push({
+      name: document.getElementById("name").value.trim(),
+      category: document.getElementById("personCategory").value,
+      description: document.getElementById("description").value.trim(),
+      source: document.getElementById("source").value.trim(),
+      votes: 0
+    });
+
+    this.reset();
+    closeForm();
+    render();
+  });
+
+search.addEventListener("input", render);
+category.addEventListener("change", render);
+
+function escapeHtml(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value);
+}
+
+render();
+
+</script>
+
+</body>
+</html>
