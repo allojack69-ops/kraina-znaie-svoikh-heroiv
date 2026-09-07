@@ -195,7 +195,13 @@
       "https://short.nabu.gov.ua/COcpcZ",
       "https://short.nabu.gov.ua/0znJh1",
       "http://short.nabu.gov.ua/Br1qze",
-      "https://short.nabu.gov.ua/2m9s6t"
+      "https://short.nabu.gov.ua/2m9s6t",
+      {
+        "title": "Підбурювання суддею до хабаря у $30 тисяч: завершили слідство | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/pidburiuvannia-suddeiu-do-khabaria-u-30-tysiach-zavershyly-slidstvo/",
+        "source": "NABU",
+        "date": "2026-09-07"
+      }
     ],
     "articles": [
       "Дорожня корупція на Полтавщині: нові підозри",
@@ -1135,6 +1141,12 @@
         "url": "https://nabu.gov.ua/news/khabar-za-zakryttia-spravy-sudytymut-suddiu-ta-zastupnyka-golovy-gromady/",
         "source": "NABU",
         "date": "2026-09-03"
+      },
+      {
+        "title": "Підбурювання суддею до хабаря у $30 тисяч: завершили слідство | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/pidburiuvannia-suddeiu-do-khabaria-u-30-tysiach-zavershyly-slidstvo/",
+        "source": "NABU",
+        "date": "2026-09-07"
       }
     ],
     "needs_review": true
@@ -1193,6 +1205,12 @@
         "url": "https://nabu.gov.ua/news/khabar-za-zakryttia-spravy-sudytymut-suddiu-ta-zastupnyka-golovy-gromady/",
         "source": "NABU",
         "date": "2026-09-03"
+      },
+      {
+        "title": "Підбурювання суддею до хабаря у $30 тисяч: завершили слідство | НАБУ офіційний вебсайт",
+        "url": "https://nabu.gov.ua/news/pidburiuvannia-suddeiu-do-khabaria-u-30-tysiach-zavershyly-slidstvo/",
+        "source": "NABU",
+        "date": "2026-09-07"
       }
     ],
     "needs_review": true
